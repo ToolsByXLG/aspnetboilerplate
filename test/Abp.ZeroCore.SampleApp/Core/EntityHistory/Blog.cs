@@ -9,8 +9,7 @@ namespace Abp.ZeroCore.SampleApp.Core.EntityHistory
     [Audited]
     public class Blog : AggregateRoot, IHasCreationTime
     {
-        [DisableAuditing]
-        public string Name { get; set; }
+        [DisableAuditing] public string Name { get; set; }
 
         public string Url { get; protected set; }
 
@@ -18,11 +17,13 @@ namespace Abp.ZeroCore.SampleApp.Core.EntityHistory
 
         public BlogEx More { get; set; }
 
+        public ICollection<BlogPromotion> Promotions { get; set; }
+
         public ICollection<Post> Posts { get; set; }
 
         public Blog()
         {
-
+            
         }
 
         public Blog(string name, string url, string bloggerName)
@@ -39,7 +40,7 @@ namespace Abp.ZeroCore.SampleApp.Core.EntityHistory
 
             Name = name;
             Url = url;
-            More = new BlogEx { BloggerName = bloggerName };
+            More = new BlogEx {BloggerName = bloggerName};
         }
 
         public void ChangeUrl(string url)
@@ -57,5 +58,14 @@ namespace Abp.ZeroCore.SampleApp.Core.EntityHistory
     public class BlogEx
     {
         public string BloggerName { get; set; }
+    }
+
+    public class BlogPromotion
+    {
+        public int BlogId { get; set; }
+
+        public int AdvertisementId { get; set; }
+
+        public string Title { get; set; }
     }
 }
